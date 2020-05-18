@@ -1,6 +1,5 @@
 package com.algorithm.sao.artem;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 //first task
@@ -10,18 +9,21 @@ public class Solution
 
 	public double findMaxAverage(int[] nums, int k)
 	{
-		return Stream.iterate(SEED, i -> ++i)
-				.limit(nums.length - k+1)
-				.map(i->Arrays.copyOfRange(nums, i, i + k))
-				.map(this::arrayAverage)
-				.max(Double::compareTo)
-				.get();
+		return Stream.iterate(SEED, i -> i = i + 1)
+				.limit(nums.length - k)
+				.map(integer -> this.sum(nums, integer, integer + k + 1))
+				.max(Integer::compareTo)
+				.get() / (double) k;
+
 	}
 
-	private double arrayAverage(int[] nums)
+	private int sum(int[] nums, int from, int to)
 	{
-		return Arrays.stream(nums)
-				.average()
-				.getAsDouble();
+		int sum = 0;
+		for (int i = from; i < to; i++)
+		{
+			sum += nums[i];
+		}
+		return sum;
 	}
 }
