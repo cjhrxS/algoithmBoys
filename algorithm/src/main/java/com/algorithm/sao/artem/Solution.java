@@ -10,8 +10,8 @@ public class Solution
 
 	public double findMaxAverage(int[] nums, int k)
 	{
-		return Stream.iterate(SEED, i -> i++)
-				.limit(nums.length - k)
+		return Stream.iterate(SEED, i -> ++i)
+				.limit(nums.length - k+1)
 				.map(i->Arrays.copyOfRange(nums, i, i + k))
 				.map(this::arrayAverage)
 				.max(Double::compareTo)
