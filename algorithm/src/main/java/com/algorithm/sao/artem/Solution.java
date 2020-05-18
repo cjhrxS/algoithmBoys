@@ -5,25 +5,20 @@ import java.util.stream.Stream;
 //first task
 public class Solution
 {
-	private static final int SEED = 0;
-
 	public double findMaxAverage(int[] nums, int k)
 	{
-		return Stream.iterate(SEED, i -> i = i + 1)
-				.limit(nums.length - k)
-				.map(integer -> this.sum(nums, integer, integer + k + 1))
-				.max(Integer::compareTo)
-				.get() / (double) k;
+		int sum, max = Integer.MIN_VALUE;
 
-	}
-
-	private int sum(int[] nums, int from, int to)
-	{
-		int sum = 0;
-		for (int i = from; i < to; i++)
+		for (int i = 0; i < nums.length - k+1; i++)
 		{
-			sum += nums[i];
+			sum = 0;
+			for (int j = i; j < i + k; j++) {
+				sum+=nums[j];
+			}
+			if (sum > max) {
+				max = sum;
+			}
 		}
-		return sum;
+		return max/(double)k;
 	}
 }
