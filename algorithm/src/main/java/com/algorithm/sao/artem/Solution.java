@@ -1,29 +1,36 @@
 package com.algorithm.sao.artem;
 
-import java.util.stream.Stream;
-
 //first task
 public class Solution
 {
-	private static final int SEED = 0;
+	public static void main(String[] args)
+	{
+		System.out.println(new Solution().findMaxAverage(new int[] { 1, 12, -5, -6, 50, 3 }, 4));
+	}
 
 	public double findMaxAverage(int[] nums, int k)
 	{
-		return Stream.iterate(SEED, i -> i = i + 1)
-				.limit(nums.length - k)
-				.map(integer -> this.sum(nums, integer, integer + k + 1))
-				.max(Integer::compareTo)
-				.get() / (double) k;
-
-	}
-
-	private int sum(int[] nums, int from, int to)
-	{
-		int sum = 0;
-		for (int i = from; i < to; i++)
+		int r = k, sum = 0, max = Integer.MIN_VALUE;
+		while (r != 0)
 		{
-			sum += nums[i];
+			sum += nums[k - r];
+			r--;
 		}
-		return sum;
+
+		for (int i = k; i < nums.length; i++)
+		{
+			if (sum > max)
+			{
+				max = sum;
+			}
+			sum += nums[i];
+			sum -= nums[i - k];
+		}
+		if (sum > max)
+		{
+			max = sum;
+		}
+
+		return max / (double) k;
 	}
 }
